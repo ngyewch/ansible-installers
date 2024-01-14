@@ -80,3 +80,25 @@ Registers an [Ory Hydra](https://github.com/ory/hydra) service.
 |Source |Target |Description
 |- |- |-
 |`etc/ory/hydra/{{ instance_name }}.yml` |`/etc/ory/hydra/{{ instance_name }}.yml` |Configuration file.
+
+### `install_watchexec`
+
+Installs [watchexec](https://github.com/watchexec/watchexec).
+
+#### Variables
+
+|Name |Type |Default |Description
+|- |- |- |-
+|`watchexec_version` |`string` | |watchexec version.
+
+### `install_watchexec_instance`
+
+Registers a [watchexec](https://github.com/watchexec/watchexec) service.
+
+#### Variables
+
+|Name |Type |Default |Description
+|- |- |- |-
+|`instance_name` |`string` | |Instance name.
+|`working_directory` |`string` | |Working directory.
+|`watchexec_args` |`string` | |watchexec args.
