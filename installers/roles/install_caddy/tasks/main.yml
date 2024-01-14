@@ -19,7 +19,6 @@
     state: directory
   with_items:
     - /etc/caddy
-    - /etc/caddy/conf.d
     - /etc/caddy/sites-available
     - /etc/caddy/sites-enabled
   become: yes
@@ -28,19 +27,6 @@
   template:
     src: etc/caddy/Caddyfile
     dest: /etc/caddy/
-  become: yes
-  notify:
-    - Restart caddy
-
-- name: Copy configuration files
-  copy:
-    src: "{{ item }}"
-    dest: /etc/caddy/conf.d/
-    owner: root
-    group: root
-    mode: '0644'
-  with_fileglob: 
-    - files/etc/caddy/conf.d/*
   become: yes
   notify:
     - Restart caddy
