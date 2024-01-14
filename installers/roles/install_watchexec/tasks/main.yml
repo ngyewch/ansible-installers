@@ -1,0 +1,16 @@
+---
+- name: Install watchexec
+  quera.github.install_from_github:
+    repo: watchexec/watchexec
+    tag: "{{ watchexec_version }}"
+    asset_regex: watchexec-.*-musl\.tar\.xz
+    asset_arch_mapping:
+      amd64: x86_64
+      aarch64: arm64
+      armv7l: armv7
+    version_command: watchexec --version
+    move_rules:
+      - src_regex: .*/watchexec
+        dst: /usr/bin
+        mode: 0755
+  become: yes

@@ -1,0 +1,16 @@
+---
+- name: Copy systemd unit file
+  template:
+    src: etc/systemd/system/watchexec.service
+    dest: "/etc/systemd/system/watchexec-{{ instance_name }}.service"
+  become: yes
+  notify:
+    - systemd daemon-reload
+    - "Restart watchexec-{{ instance_name }}"
+
+- name: Enable service
+  systemd:
+    name: "watchexec-{{ instance_name }}"
+    enabled: yes
+    state: started
+  become: yes
