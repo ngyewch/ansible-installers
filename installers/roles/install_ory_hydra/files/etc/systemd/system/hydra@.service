@@ -1,0 +1,11 @@
+[Unit]
+Description=%I hydra service
+
+[Service]
+ExecStart=/usr/local/bin/hydra serve all --config /etc/ory/hydra/%i.yml
+TimeoutSec=10
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

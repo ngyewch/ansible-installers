@@ -1,0 +1,27 @@
+---
+- name: Install oauth2-proxy
+  quera.github.install_from_github:
+    repo: oauth2-proxy/oauth2-proxy
+    tag: "{{ oauth2_proxy_version }}"
+    asset_regex: oauth2-proxy-.*\.tar\.gz
+    version_command: oauth2-proxy --version
+    move_rules:
+      - src_regex: oauth2-proxy
+        dst: /usr/bin
+        mode: 0755
+  become: yes
+  register: oauth2_proxy
+
+- name: Copy systemd unit template file
+  copy:
+    src: etc/systemd/system/oauth2-proxy@.service
+    dest: /etc/systemd/system/
+    mode: '0644'
+  become: yes
+  register: oauth2_proxy_systemd_unit
+
+- name: Create configuration directory
+  file:
+    path: /etc/oauth2-proxy
+    state: directory
+  become: yes

@@ -1,0 +1,6 @@
+---
+- name: "Restart oauth2-proxy@{{ instance_name }}"
+  systemd:
+    name: "oauth2-proxy@{{ instance_name }}"
+    state: restarted
+  become: yes

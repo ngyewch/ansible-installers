@@ -1,0 +1,34 @@
+---
+- name: Install hydra
+  quera.github.install_from_github:
+    repo: ory/hydra
+    tag: "{{ hydra_version }}"
+    asset_regex: hydra_[^-]+-[^_]+_[^_]+\.tar\.gz
+    asset_arch_mapping:
+      x86_64: 64bit
+      amd64: 64bit
+      aarch64: arm64
+      armv6l: armv6
+      armhf: armv6
+      armv7l: armv7
+    version_command: hydra version
+    move_rules:
+      - src_regex: hydra
+        dst: /usr/bin
+        mode: 0755
+  become: yes
+  register: hydra
+
+- name: Copy hydra systemd unit template file
+  copy:
+    src: etc/systemd/system/hydra@.service
+    dest: /etc/systemd/system/
+    mode: '0644'
+  become: yes
+  register: hydra_systemd_unit
+
+- name: Create hydra configuration directory
+  file:
+    path: /etc/ory/hydra
+    state: directory
+  become: yes

@@ -1,0 +1,4 @@
+---
+allow_duplicates: true
+dependencies:
+  - role: install_oauth2_proxy

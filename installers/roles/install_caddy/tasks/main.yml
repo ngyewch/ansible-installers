@@ -1,0 +1,87 @@
+---
+- name: Install caddy
+  quera.github.install_from_github:
+    repo: caddyserver/caddy
+    tag: "{{ caddy_version }}"
+    asset_regex: caddy_.*\.tar\.gz
+    version_command: caddy version
+    move_rules:
+      - src_regex: caddy
+        dst: /usr/bin
+        mode: 0755
+  become: yes
+  notify:
+    - Restart caddy
+
+- name: Create configuration directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /etc/caddy
+    - /etc/caddy/conf.d
+    - /etc/caddy/sites-available
+    - /etc/caddy/sites-enabled
+  become: yes
+
+- name: Copy configuration
+  template:
+    src: etc/caddy/Caddyfile
+    dest: /etc/caddy/
+  become: yes
+  notify:
+    - Restart caddy
+
+- name: Copy configuration files
+  copy:
+    src: "{{ item }}"
+    dest: /etc/caddy/conf.d/
+    owner: root
+    group: root
+    mode: '0644'
+  with_fileglob: 
+    - files/etc/caddy/conf.d/*
+  become: yes
+  notify:
+    - Restart caddy
+
+- name: Copy sites-available files
+  copy:
+    src: "{{ item }}"
+    dest: /etc/caddy/sites-available/
+    owner: root
+    group: root
+    mode: '0644'
+  with_fileglob: 
+    - files/etc/caddy/sites-available/*
+  become: yes
+  notify:
+    - Restart caddy
+
+- name: Setup sites-enabled files
+  file:
+    src: "/etc/caddy/sites-available/{{ item | basename }}"
+    dest: "/etc/caddy/sites-enabled/{{ item | basename }}"
+    state: link
+  with_fileglob: 
+    - files/etc/caddy/sites-available/*
+  become: yes
+  notify:
+    - Restart caddy
+
+- name: Copy systemd unit file
+  copy:
+    src: etc/systemd/system/caddy.service
+    dest: /etc/systemd/system/
+    mode: '0644'
+  become: yes
+  notify:
+    - systemd daemon-reload
+    - Restart caddy
+
+- name: Enable service
+  systemd:
+    name: caddy
+    enabled: yes
+    state: started
+  become: yes

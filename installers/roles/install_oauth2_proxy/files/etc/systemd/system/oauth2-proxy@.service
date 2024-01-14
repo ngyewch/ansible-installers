@@ -1,0 +1,11 @@
+[Unit]
+Description=%I oauth2-proxy service
+
+[Service]
+ExecStart=/usr/bin/oauth2-proxy --config /etc/oauth2-proxy/%i.cfg
+TimeoutSec=10
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

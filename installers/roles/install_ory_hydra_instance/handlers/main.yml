@@ -1,0 +1,6 @@
+---
+- name: "Restart ory hydra@{{ instance_name }}"
+  systemd:
+    name: "hydra@{{ instance_name }}"
+    state: restarted
+  become: yes

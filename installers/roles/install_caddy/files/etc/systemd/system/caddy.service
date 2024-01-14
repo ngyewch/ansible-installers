@@ -1,0 +1,12 @@
+[Unit]
+Description=caddy service
+
+[Service]
+ExecStart=/usr/bin/caddy run --config /etc/caddy/Caddyfile
+TimeoutSec=10
+Restart=always
+RestartSec=10
+Environment="HOME=/root"
+
+[Install]
+WantedBy=multi-user.target

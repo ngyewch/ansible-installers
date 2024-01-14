@@ -1,0 +1,10 @@
+{
+	email {{ email_address }}
+	storage file_system {
+		root /var/lib/caddy
+	}
+}
+
+import conf.d/*
+
+import sites-enabled/*

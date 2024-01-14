@@ -1,0 +1,11 @@
+namespace: ngyewch
+name: installers
+version: 1.0.0
+readme: README.md
+authors:
+  - Nick Ng (https://github.com/ngyewch)
+description: Opinionated software installers for Linux.
+license:
+  - MIT
+dependencies:
+  "quera.github": "*"
