@@ -6,7 +6,7 @@
     asset_regex: oauth2-proxy-.*\.tar\.gz
     version_command: oauth2-proxy --version
     move_rules:
-      - src_regex: oauth2-proxy
+      - src_regex: .*/oauth2-proxy
         dst: /usr/bin
         mode: 0755
   become: yes
