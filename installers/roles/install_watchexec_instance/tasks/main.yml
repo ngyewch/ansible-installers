@@ -1,6 +1,6 @@
 ---
 - name: Copy systemd unit file
-  template:
+  ansible.builtin.template:
     src: etc/systemd/system/watchexec.service
     dest: "/etc/systemd/system/watchexec-{{ instance_name }}.service"
   become: yes
@@ -9,7 +9,7 @@
     - "Restart watchexec-{{ instance_name }}"
 
 - name: Enable service
-  systemd:
+  ansible.builtin.systemd:
     name: "watchexec-{{ instance_name }}"
     enabled: yes
     state: started

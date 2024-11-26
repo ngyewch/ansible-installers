@@ -20,7 +20,7 @@
   register: hydra
 
 - name: Copy hydra systemd unit template file
-  copy:
+  ansible.builtin.copy:
     src: etc/systemd/system/hydra@.service
     dest: /etc/systemd/system/
     mode: '0644'
@@ -28,7 +28,7 @@
   register: hydra_systemd_unit
 
 - name: Create hydra configuration directory
-  file:
+  ansible.builtin.file:
     path: /etc/ory/hydra
     state: directory
   become: yes

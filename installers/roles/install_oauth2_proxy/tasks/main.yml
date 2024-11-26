@@ -13,7 +13,7 @@
   register: oauth2_proxy
 
 - name: Copy systemd unit template file
-  copy:
+  ansible.builtin.copy:
     src: etc/systemd/system/oauth2-proxy@.service
     dest: /etc/systemd/system/
     mode: '0644'
@@ -21,7 +21,7 @@
   register: oauth2_proxy_systemd_unit
 
 - name: Create configuration directory
-  file:
+  ansible.builtin.file:
     path: /etc/oauth2-proxy
     state: directory
   become: yes

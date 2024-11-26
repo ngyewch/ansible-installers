@@ -14,7 +14,7 @@
     - Restart caddy
 
 - name: Create configuration directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
   with_items:
@@ -24,7 +24,7 @@
   become: yes
 
 - name: Copy configuration
-  template:
+  ansible.builtin.template:
     src: etc/caddy/Caddyfile
     dest: /etc/caddy/
   become: yes
@@ -32,7 +32,7 @@
     - Restart caddy
 
 - name: Copy sites-available files
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: /etc/caddy/sites-available/
     owner: root
@@ -45,7 +45,7 @@
     - Restart caddy
 
 - name: Setup sites-enabled files
-  file:
+  ansible.builtin.file:
     src: "/etc/caddy/sites-available/{{ item | basename }}"
     dest: "/etc/caddy/sites-enabled/{{ item | basename }}"
     state: link
@@ -56,7 +56,7 @@
     - Restart caddy
 
 - name: Copy systemd unit file
-  copy:
+  ansible.builtin.copy:
     src: etc/systemd/system/caddy.service
     dest: /etc/systemd/system/
     mode: '0644'
@@ -66,7 +66,7 @@
     - Restart caddy
 
 - name: Enable service
-  systemd:
+  ansible.builtin.systemd:
     name: caddy
     enabled: yes
     state: started

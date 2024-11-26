@@ -1,6 +1,6 @@
 ---
 - name: "Copy configuration file for {{ instance_name }}"
-  template:
+  ansible.builtin.template:
     src: "etc/ory/hydra/{{ instance_name }}.yml"
     dest: "/etc/ory/hydra/{{ instance_name }}.yml"
     owner: root
@@ -11,7 +11,7 @@
     - "Restart ory hydra@{{ instance_name }}"
 
 - name: "Enable service hydra@{{ instance_name }}"
-  systemd:
+  ansible.builtin.systemd:
     name: "hydra@{{ instance_name }}"
     enabled: yes
     state: started

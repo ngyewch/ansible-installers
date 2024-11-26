@@ -1,6 +1,6 @@
 ---
 - name: "Copy configuration file for {{ instance_name }}"
-  template:
+  ansible.builtin.template:
     src: "etc/oauth2-proxy/{{ instance_name }}.cfg"
     dest: "/etc/oauth2-proxy/{{ instance_name }}.cfg"
   become: yes
@@ -8,7 +8,7 @@
     - "Restart oauth2-proxy@{{ instance_name }}"
 
 - name: "Enable service oauth2-proxy@{{ instance_name }}"
-  systemd:
+  ansible.builtin.systemd:
     name: "oauth2-proxy@{{ instance_name }}"
     enabled: yes
     state: started
