@@ -3,8 +3,8 @@
 	storage file_system {
 		root /var/lib/caddy
 	}
-}
 
-import conf.d/*
+	import conf.d/*
+}
 
 import sites-enabled/*
