@@ -1,0 +1,12 @@
+[Unit]
+Description=%I oathkeeper service
+
+[Service]
+ExecStart=/usr/bin/oathkeeper serve --config config.yml
+WorkingDirectory=/etc/ory/oathkeeper/%i
+TimeoutSec=10
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

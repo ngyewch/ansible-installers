@@ -1,0 +1,17 @@
+---
+- name: "Copy configuration file for {{ instance_name }}"
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/etc/ory/oathkeeper/{{ instance_name }}"
+  with_fileglob: 
+    - "files/etc/ory/oathkeeper/{{ instance_name }}.d/*"
+  become: yes
+  notify:
+    - "Restart ory oathkeeper@{{ instance_name }}"
+
+- name: "Enable service oathkeeper@{{ instance_name }}"
+  ansible.builtin.systemd:
+    name: "oathkeeper@{{ instance_name }}"
+    enabled: yes
+    state: started
+  become: yes

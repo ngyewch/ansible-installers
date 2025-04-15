@@ -1,0 +1,6 @@
+---
+- name: "Restart ory oathkeeper@{{ instance_name }}"
+  systemd:
+    name: "oathkeeper@{{ instance_name }}"
+    state: restarted
+  become: yes

@@ -1,0 +1,34 @@
+---
+- name: Install oathkeeper
+  quera.github.install_from_github:
+    repo: ory/oathkeeper
+    tag: "{{ oathkeeper_version }}"
+    asset_regex: oathkeeper_[^-]+-[^_]+_[^_]+\.tar\.gz
+    asset_arch_mapping:
+      x86_64: 64bit
+      amd64: 64bit
+      aarch64: arm64
+      armv6l: armv6
+      armhf: armv6
+      armv7l: armv7
+    version_command: oathkeeper version
+    move_rules:
+      - src_regex: oathkeeper
+        dst: /usr/bin
+        mode: 0755
+  become: yes
+  register: oathkeeper
+
+- name: Copy oathkeeper systemd unit template file
+  ansible.builtin.copy:
+    src: etc/systemd/system/oathkeeper@.service
+    dest: /etc/systemd/system/
+    mode: '0644'
+  become: yes
+  register: oathkeeper_systemd_unit
+
+- name: Create oathkeeper configuration directory
+  ansible.builtin.file:
+    path: /etc/ory/oathkeeper
+    state: directory
+  become: yes
